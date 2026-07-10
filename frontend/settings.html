@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Configurações | DOZEMEC</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <strong>DOZEMEC</strong>
+          <h1>Configurações</h1>
+          <span class="muted" id="settingsCompanyName">Carregando...</span>
+        </div>
+        <div class="actions">
+          <a class="button secondary" href="index.html">Início</a>
+          <button class="secondary" id="logoutButton">Sair</button>
+        </div>
+      </header>
+
+      <nav class="tabs" aria-label="Configurações">
+        <button class="tab active" data-tab="companySection" type="button">Empresa</button>
+        <button class="tab" data-tab="brandingSection" type="button">Identidade</button>
+        <button class="tab" data-tab="settingsSection" type="button">Oficina</button>
+        <button class="tab" data-tab="hoursSection" type="button">Horários</button>
+        <button class="tab" data-tab="integrationsSection" type="button">Integrações</button>
+      </nav>
+
+      <section class="panel section active" id="companySection">
+        <h2>Dados da empresa</h2>
+        <form id="companyForm" class="grid">
+          <label>Nome legal<input name="legalName"></label>
+          <label>Nome comercial<input name="tradeName"></label>
+          <label>NIF<input name="taxNumber"></label>
+          <label>E-mail<input name="email" type="email"></label>
+          <label>Telefone<input name="phone"></label>
+          <label>WhatsApp<input name="whatsapp"></label>
+          <label>Cidade<input name="city"></label>
+          <label>País<input name="country"></label>
+          <label>Timezone<input name="timezone"></label>
+          <label>Locale<input name="locale"></label>
+          <label>Moeda<input name="currency" maxlength="3"></label>
+          <label>Símbolo<input name="currencySymbol"></label>
+          <label class="grid-span">Endereço<textarea name="address"></textarea></label>
+          <div class="actions"><button type="submit">Salvar empresa</button></div>
+        </form>
+      </section>
+
+      <section class="panel section" id="brandingSection">
+        <h2>Identidade visual</h2>
+        <form id="brandingForm" class="grid">
+          <label>Logo URL<input name="logoUrl" type="url"></label>
+          <label>Favicon URL<input name="faviconUrl" type="url"></label>
+          <label>Imagem de login<input name="loginImageUrl" type="url"></label>
+          <label>Imagem do painel<input name="dashboardImageUrl" type="url"></label>
+          <label>Cor principal<input name="primaryColor" placeholder="#7C3AED"></label>
+          <label>Cor secundária<input name="secondaryColor" placeholder="#111827"></label>
+          <label>Cor de destaque<input name="accentColor" placeholder="#22D3EE"></label>
+          <label>Tema<select name="theme"><option value="dark">dark</option><option value="light">light</option><option value="system">system</option></select></label>
+          <div class="actions"><button type="submit">Salvar identidade</button></div>
+        </form>
+      </section>
+
+      <section class="panel section" id="settingsSection">
+        <h2>Configurações da oficina</h2>
+        <form id="workshopForm" class="grid-3">
+          <label>Abre sábado<select name="worksSaturday"><option value="true">Sim</option><option value="false">Não</option></select></label>
+          <label>Abre domingo<select name="worksSunday"><option value="false">Não</option><option value="true">Sim</option></select></label>
+          <label>Duração padrão<input name="defaultServiceDurationMinutes" type="number" min="1"></label>
+          <label>Intervalo agenda<input name="appointmentIntervalMinutes" type="number" min="1"></label>
+          <label>Prefixo OS<input name="workOrderPrefix" maxlength="10"></label>
+          <label>Próxima OS<input name="workOrderNextNumber" type="number" min="1"></label>
+          <label>Dígitos OS<input name="workOrderNumberPadding" type="number" min="3" max="12"></label>
+          <label>IVA padrão<input name="defaultTaxPercentage" type="number" min="0" max="100" step="0.01"></label>
+          <label>Margem peças<input name="defaultPartsMarginPercentage" type="number" min="0" max="100" step="0.01"></label>
+          <label>Aprovação cliente<select name="requireCustomerApproval"><option value="true">Sim</option><option value="false">Não</option></select></label>
+          <label>Fotos do veículo<select name="requireVehiclePhotos"><option value="false">Não</option><option value="true">Sim</option></select></label>
+          <label>Checklist<select name="requireChecklist"><option value="true">Sim</option><option value="false">Não</option></select></label>
+          <div class="actions"><button type="submit">Salvar configurações</button></div>
+        </form>
+      </section>
+
+      <section class="panel section" id="hoursSection">
+        <h2>Horários</h2>
+        <form id="hoursForm">
+          <div id="hoursList"></div>
+          <div class="actions"><button type="submit">Salvar horários</button></div>
+        </form>
+      </section>
+
+      <section class="panel section" id="integrationsSection">
+        <h2>Integrações futuras</h2>
+        <div id="integrationsList"></div>
+      </section>
+
+      <p class="message" id="settingsMessage"></p>
+    </main>
+    <script src="js/api/client.js"></script>
+    <script src="js/auth/session.js"></script>
+    <script src="js/modules/companySettings.js"></script>
+    <script src="js/modules/businessHours.js"></script>
+  </body>
+</html>

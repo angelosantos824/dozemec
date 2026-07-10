@@ -43,6 +43,16 @@ module.exports = {
     "financial.delete",
     "reports.read",
     "settings.read",
-    "settings.update"
+    "settings.update",
+    "company.read",
+    "company.update",
+    "company_branding.read",
+    "company_branding.update",
+    "company_settings.read",
+    "company_settings.update",
+    "business_hours.read",
+    "business_hours.update",
+    "integrations.read",
+    "integrations.update"
   ]
 };

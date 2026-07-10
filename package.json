@@ -1,6 +1,6 @@
 {
   "name": "dozemec",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Base inicial do SaaS DOZEMEC para gerenciamento de oficinas.",
   "main": "server/app.js",
   "scripts": {
