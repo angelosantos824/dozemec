@@ -51,7 +51,7 @@ Teste:
 curl http://localhost:3006/api/health
 ```
 
-Abra `frontend/login.html` e entre com `admin@dozemec.com` / `Admin@123`.
+Abra `http://localhost:3006/auth/login.html` e entre com `admin@dozemec.com` / `Admin@123`.
 
 Na area administrativa, acesse tambem:
 
@@ -65,5 +65,7 @@ Na area administrativa, acesse tambem:
 - `frontend/equipment-types.html`
 - `frontend/equipment.html`
 - `frontend/equipment-maintenance.html`
+- `http://localhost:3006/dashboard/`
+- `http://localhost:3006/workshop/map.html`
 
 Use `npm.cmd` no PowerShell se `npm.ps1` for bloqueado pela politica de execucao.

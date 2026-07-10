@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v0.4.1
+
+- Reorganizacao do frontend por dominio.
+- Layout administrativo compartilhado.
+- Sidebar e topbar reutilizaveis.
+- Navegacao baseada em permissoes.
+- Componentes compartilhados de toast, loader e confirmacao.
+- CSS modular.
+- Aplicacao centralizada de tema e identidade visual.
+- Compatibilidade com URLs antigas.
+- Melhorias de responsividade e acessibilidade.
+
 ## v0.4.0
 
 - Gestao de areas da oficina.

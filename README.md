@@ -1,16 +1,10 @@
 # DOZEMEC
 
-SaaS multiempresa da DOZEDEV para gestao de oficinas. Versao atual: `0.4.0`.
+SaaS multiempresa da DOZEDEV para gestao de oficinas. Versao atual: `0.4.1`.
 
-## Sprint 04
+## Sprint 04.1
 
-A Sprint 04 implementa a estrutura fisica da oficina: areas, baias, tipos de equipamento, equipamentos, historico de estados, manutencoes e mapa operacional. Nao inclui funcionarios, clientes, veiculos, estoque, financeiro ou ordens de servico.
-
-Porta padrao:
-
-```env
-PORT=3006
-```
+Esta Sprint reorganiza o frontend em um layout administrativo compartilhado, sem criar modulo de negocio, migration, seed ou endpoint novo.
 
 ## Execucao
 
@@ -22,92 +16,86 @@ npm.cmd run seed
 npm.cmd run dev
 ```
 
-Banco:
+Porta padrao: `3006`.
 
-```sql
-CREATE DATABASE dozemec CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+## Nova Estrutura Frontend
+
+```text
+frontend/
+  auth/login.html
+  dashboard/index.html
+  administration/
+  workshop/
+  settings/company.html
+  assets/css/
+  js/layout/
+  js/modules/
 ```
 
-Credenciais demo: `admin@dozemec.com` / `Admin@123`.
+URLs antigas continuam funcionando por redirecionamento:
 
-## Novas tabelas
+- `/login.html` -> `/auth/login.html`
+- `/index.html` -> `/dashboard/`
+- `/settings.html` -> `/settings/company.html`
+- `/users.html` -> `/administration/users.html`
+- `/workshop-map.html` -> `/workshop/map.html`
 
-- `workshop_areas`
-- `workshop_bays`
-- `equipment_types`
-- `workshop_equipment`
-- `equipment_maintenance_records`
-- `bay_status_history`
-- `equipment_status_history`
+## Layout Compartilhado
 
-## Permissoes
+Cada pagina interna usa:
 
-Foram adicionadas permissoes para `workshop_areas`, `workshop_bays`, `equipment_types`, `equipment`, `equipment_maintenance` e `workshop_map`. O perfil Admin recebe todas; perfis iniciais recebem acessos coerentes.
-
-## Endpoints
-
-```http
-GET /api/workshop/map
-GET/POST /api/workshop/areas
-GET/PUT/DELETE /api/workshop/areas/:id
-GET/POST /api/workshop/bays
-GET/PUT/DELETE /api/workshop/bays/:id
-PATCH /api/workshop/bays/:id/status
-GET /api/workshop/bays/:id/history
-GET/POST /api/equipment-types
-GET/PUT/DELETE /api/equipment-types/:id
-GET/POST /api/equipment
-GET/PUT/DELETE /api/equipment/:id
-PATCH /api/equipment/:id/status
-GET /api/equipment/:id/history
-GET/POST /api/equipment-maintenance
-GET/PUT/DELETE /api/equipment-maintenance/:id
-PATCH /api/equipment-maintenance/:id/start
-PATCH /api/equipment-maintenance/:id/complete
-PATCH /api/equipment-maintenance/:id/cancel
+```html
+<body data-page="workshop-map">
+  <div id="app"></div>
+  <script src="/js/layout/appLayout.js"></script>
+  <script src="/js/modules/workshopMap.js"></script>
+</body>
 ```
 
-## Estados
+O layout cria sidebar, topbar, breadcrumb, conteudo, rodape, toast, loader e confirmacao. Os modulos continuam responsaveis pela regra de interface da pagina.
 
-Baias: `available`, `reserved`, `occupied`, `maintenance`, `unavailable`.
+## Como Criar Uma Nova Pagina Administrativa
 
-Equipamentos: `available`, `in_use`, `maintenance`, `unavailable`, `retired`.
+1. Criar HTML no dominio correto.
+2. Definir `data-page`.
+3. Carregar scripts de API, sessao, layout e modulo.
+4. Criar modulo em `frontend/js/modules`.
+5. Registrar a pagina em `frontend/js/layout/navigation.js`.
+6. Informar permissao minima.
+7. Adicionar template em `frontend/js/layout/pageTemplates.js`.
+8. Testar desktop e mobile.
+9. Atualizar documentacao.
 
-Manutencoes: `scheduled`, `in_progress`, `completed`, `cancelled`.
+## Componentes
 
-## Seed inicial
+- Toast: `window.DOZEMECToast.showSuccess|showError|showWarning|showInfo`.
+- Loader: `window.DOZEMEC_LAYOUT.showLoader()` e `hideLoader()`.
+- Confirmacao: `await window.DOZEMEC_LAYOUT.confirm({ title, message })`.
 
-Cria para o tenant demo:
+## API
 
-- Areas: Oficina principal, Alinhamento, Balanceamento.
-- 8 baias: 5 com elevador, 2 de alinhamento, 1 de balanceamento.
-- 8 tipos de equipamento.
-- 8 equipamentos vinculados as baias.
+O client usa caminho relativo `/api`, evitando `localhost` fixo e facilitando reverse proxy/producao.
 
-## Frontend
+## Segurança Frontend
 
-Novas paginas:
+- Menu baseado em permissoes vindas de `/api/auth/me`.
+- Backend segue sendo autoridade.
+- Dados de API sao renderizados com `textContent`.
+- Tema e cores da empresa sao validados antes de aplicar CSS variables.
+- Token fica centralizado em `session.js`.
 
-- `frontend/workshop-map.html`
-- `frontend/workshop-areas.html`
-- `frontend/workshop-bays.html`
-- `frontend/equipment-types.html`
-- `frontend/equipment.html`
-- `frontend/equipment-maintenance.html`
+## Paginas Principais
 
-## Multiempresa e seguranca
-
-Todas as consultas usam `tenant_id` do token. Nenhum endpoint aceita `tenant_id` do cliente. Alteracoes relevantes geram auditoria sanitizada. Exclusoes sao logicas quando ha historico operacional.
-
-## Testes manuais
-
-1. Aplicar migration 004.
-2. Executar seed e reexecutar sem duplicar.
-3. Consultar mapa da oficina.
-4. Validar 3 areas, 8 baias, 8 tipos e 8 equipamentos.
-5. Criar/editar area, baia, tipo e equipamento.
-6. Alterar estado de baia/equipamento e consultar historico.
-7. Criar, iniciar, concluir e cancelar manutencao.
-8. Verificar auditoria.
-9. Acessar sem token.
-10. Verificar pagina 3006 e frontend.
+- `/auth/login.html`
+- `/dashboard/`
+- `/settings/company.html`
+- `/administration/users.html`
+- `/administration/sectors.html`
+- `/administration/roles.html`
+- `/administration/audit.html`
+- `/workshop/map.html`
+- `/workshop/areas.html`
+- `/workshop/bays.html`
+- `/workshop/equipment-types.html`
+- `/workshop/equipment.html`
+- `/workshop/maintenance.html`

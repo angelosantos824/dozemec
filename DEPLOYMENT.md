@@ -59,3 +59,12 @@ Nao ha sistema automatico de atualizacao nesta etapa.
 - Imagens e uploads externos ainda nao foram implementados.
 - Monitore logs de auditoria para mudancas de estados e manutencoes.
 - Em atualizacoes de `0.3.0` para `0.4.0`, rode migrations antes de liberar o frontend novo.
+
+## Sprint 04.1
+
+- O frontend e servido pelo Express como arquivos estaticos.
+- O client usa `/api`, adequado para reverse proxy.
+- Configure cache de estaticos com cuidado ao publicar nova versao.
+- Redirecionamentos antigos devem ser preservados para compatibilidade.
+- Nao ha migration nesta Sprint.
+- Backup continua recomendado antes de qualquer publicacao.

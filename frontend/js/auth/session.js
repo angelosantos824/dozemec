@@ -37,7 +37,7 @@
 
   function requireAuth() {
     if (!getToken()) {
-      window.location.href = "login.html";
+      window.location.href = "/auth/login.html";
       return false;
     }
     return true;
@@ -48,8 +48,13 @@
     if (!button) return;
     button.addEventListener("click", () => {
       clear();
-      window.location.href = "login.html";
+      window.location.href = "/auth/login.html";
     });
+  }
+
+  function logout() {
+    clear();
+    window.location.href = "/auth/login.html";
   }
 
   window.DOZEMECSession = {
@@ -59,6 +64,7 @@
     refreshUser,
     hasPermission,
     clear,
+    logout,
     requireAuth,
     bindLogout
   };

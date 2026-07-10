@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login | DOZEMEC</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <main class="login-wrap">
+      <form class="panel login-card" id="loginForm">
+        <div class="brand"><strong>DOZEDEV</strong><h1>DOZEMEC</h1><span class="muted">Acesso administrativo</span></div>
+        <label>E-mail<input id="email" name="email" type="email" autocomplete="email" required></label>
+        <label>Senha<input id="password" name="password" type="password" autocomplete="current-password" required></label>
+        <div class="actions"><button type="submit" id="loginButton">Entrar</button><button type="button" class="secondary" id="togglePassword">Mostrar senha</button></div>
+        <p class="message" id="loginMessage"></p>
+      </form>
+    </main>
+    <script src="/js/api/client.js"></script>
+    <script src="/js/auth/session.js"></script>
+    <script src="/js/auth/login.js"></script>
+  </body>
+</html>

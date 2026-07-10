@@ -5,7 +5,7 @@
   const password = document.getElementById("password");
 
   if (window.DOZEMECSession.getToken()) {
-    window.location.href = "index.html";
+    window.location.href = "/dashboard/";
   }
 
   togglePassword.addEventListener("click", () => {
@@ -25,7 +25,7 @@
         password: form.password.value
       });
       window.DOZEMECSession.save(data.token, data.user);
-      window.location.href = "index.html";
+      window.location.href = "/dashboard/";
     } catch (error) {
       message.className = "message error";
       message.textContent = error.message;

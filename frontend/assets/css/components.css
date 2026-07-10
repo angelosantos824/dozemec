@@ -1,0 +1,24 @@
+.panel { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 20px; }
+.button, button { border: 0; border-radius: var(--radius-sm); background: var(--color-primary); color: white; padding: 10px 14px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; min-height: 40px; }
+button.secondary, .button.secondary { background: var(--color-surface-soft); color: var(--color-text); border: 1px solid var(--color-border); }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.toolbar input, .toolbar select { max-width: 220px; }
+.message { min-height: 22px; margin-top: 12px; color: var(--color-muted); }
+.message.error { color: var(--color-danger); }
+.message.success { color: var(--color-success); }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.tab { background: var(--color-surface-soft); border: 1px solid var(--color-border); }
+.tab.active { background: var(--color-primary); border-color: var(--color-primary); }
+.section { display: none; }
+.section.active { display: block; }
+.toast-region { position: fixed; right: 18px; bottom: 18px; display: grid; gap: 10px; z-index: 50; }
+.toast { background: var(--color-surface); border: 1px solid var(--color-border); border-left: 4px solid var(--color-accent); border-radius: var(--radius-md); padding: 12px 14px; min-width: 260px; box-shadow: 0 12px 32px rgba(0,0,0,.3); }
+.toast.error { border-left-color: var(--color-danger); }
+.toast.success { border-left-color: var(--color-success); }
+.loader-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: grid; place-items: center; z-index: 60; }
+.loader-box { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 18px; }
+.map-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 18px; }
+.metric, .bay-card { background: #0c111b; border: 1px solid var(--color-border); border-radius: 8px; padding: 12px; }
+.bay-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.status-pill { display: inline-flex; border-radius: 999px; padding: 4px 8px; background: var(--color-surface-soft); color: var(--color-accent); font-size: 12px; }
