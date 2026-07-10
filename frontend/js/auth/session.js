@@ -16,6 +16,20 @@
     return raw ? JSON.parse(raw) : null;
   }
 
+  async function refreshUser() {
+    if (!getToken() || !window.DOZEMECApi) return getUser();
+    const me = await window.DOZEMECApi.get("/auth/me");
+    const current = getUser() || {};
+    const updated = { ...current, ...me };
+    localStorage.setItem(userKey, JSON.stringify(updated));
+    return updated;
+  }
+
+  function hasPermission(code) {
+    const user = getUser();
+    return Boolean(user && Array.isArray(user.permissions) && user.permissions.includes(code));
+  }
+
   function clear() {
     localStorage.removeItem(tokenKey);
     localStorage.removeItem(userKey);
@@ -42,6 +56,8 @@
     save,
     getToken,
     getUser,
+    refreshUser,
+    hasPermission,
     clear,
     requireAuth,
     bindLogout

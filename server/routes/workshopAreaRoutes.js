@@ -1,0 +1,11 @@
+const express = require("express");
+const c = require("../controllers/workshopAreaController");
+const authenticate = require("../middlewares/authenticate");
+const authorize = require("../middlewares/authorize");
+const router = express.Router();
+router.get("/", authenticate, authorize("workshop_areas.read"), c.list);
+router.post("/", authenticate, authorize("workshop_areas.create"), c.create);
+router.get("/:id", authenticate, authorize("workshop_areas.read"), c.show);
+router.put("/:id", authenticate, authorize("workshop_areas.update"), c.update);
+router.delete("/:id", authenticate, authorize("workshop_areas.delete"), c.remove);
+module.exports = router;

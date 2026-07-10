@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Perfis | DOZEMEC</title><link rel="stylesheet" href="assets/css/style.css"></head>
+  <body>
+    <main class="shell">
+      <header class="topbar"><div class="brand"><strong>DOZEMEC</strong><h1>Perfis e Permissões</h1></div><button class="secondary" id="logoutButton">Sair</button></header>
+      <nav class="nav" id="mainNav"></nav>
+      <section class="panel stack">
+        <form id="roleForm" class="grid">
+          <input type="hidden" name="id"><label>Nome<input name="name" required></label><label>Código<input name="code"></label>
+          <label>Ordem<input name="displayOrder" type="number" value="0"></label><label>Status<select name="status"><option value="active">active</option><option value="inactive">inactive</option></select></label>
+          <label>Descrição<textarea name="description"></textarea></label><div class="actions"><button>Salvar perfil</button><button type="button" class="secondary" id="clearButton">Limpar</button></div>
+        </form>
+        <div id="rolesTable"></div>
+        <section><h2>Permissões do perfil selecionado</h2><div id="permissionsList" class="checkbox-grid"></div><div class="actions"><button id="savePermissions">Salvar permissões</button></div></section>
+        <p class="message" id="pageMessage"></p>
+      </section>
+    </main>
+    <script src="js/api/client.js"></script><script src="js/auth/session.js"></script><script src="js/modules/navigation.js"></script><script src="js/modules/tableUtils.js"></script><script src="js/modules/permissions.js"></script><script src="js/modules/roles.js"></script>
+  </body>
+</html>

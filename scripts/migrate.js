@@ -26,7 +26,33 @@ async function columnExists(connection, tableName, columnName) {
   return rows.length > 0;
 }
 
+async function indexExists(connection, tableName, indexName) {
+  const [rows] = await connection.execute(
+    `SELECT INDEX_NAME
+    FROM information_schema.STATISTICS
+    WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND INDEX_NAME = ?
+    LIMIT 1`,
+    [env.db.database, tableName, indexName]
+  );
+  return rows.length > 0;
+}
+
 async function runConditionalAlter(connection, statement) {
+  const createIndexMatch = statement.match(/^CREATE\s+(UNIQUE\s+)?INDEX\s+IF\s+NOT\s+EXISTS\s+`?(\w+)`?\s+ON\s+`?(\w+)`?\s+(.+)$/i);
+  if (createIndexMatch) {
+    const unique = createIndexMatch[1] ? "UNIQUE " : "";
+    const indexName = createIndexMatch[2];
+    const tableName = createIndexMatch[3];
+    const definition = createIndexMatch[4];
+    if (await indexExists(connection, tableName, indexName)) {
+      console.log(`Indice ignorado: ${tableName}.${indexName}`);
+      return;
+    }
+    await connection.query(`CREATE ${unique}INDEX \`${indexName}\` ON \`${tableName}\` ${definition}`);
+    console.log(`Indice criado: ${tableName}.${indexName}`);
+    return;
+  }
+
   const tableMatch = statement.match(/^ALTER TABLE\s+`?(\w+)`?/i);
   if (!tableMatch || !statement.includes("ADD COLUMN IF NOT EXISTS")) {
     await connection.query(statement);

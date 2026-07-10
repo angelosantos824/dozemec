@@ -1,17 +1,10 @@
 # DOZEMEC
 
-SaaS multiempresa da DOZEDEV para gestao de oficinas. A aplicacao usa Node.js, Express, MySQL, `mysql2/promise`, JWT, CommonJS e frontend HTML/CSS/JS simples para validacao inicial.
+SaaS multiempresa da DOZEDEV para gestao de oficinas. Versao atual: `0.4.0`.
 
-## Sprint 02
+## Sprint 04
 
-Esta versao adiciona o modulo de configuracao da oficina e identidade visual da empresa:
-
-- Cadastro e edicao dos dados da oficina autenticada.
-- Identidade visual com URLs de imagens, cores e tema.
-- Configuracoes operacionais, financeiras basicas e numeracao de OS.
-- Horarios de funcionamento por dia da semana.
-- Estrutura inicial para integracoes futuras.
-- Auditoria das alteracoes principais.
+A Sprint 04 implementa a estrutura fisica da oficina: areas, baias, tipos de equipamento, equipamentos, historico de estados, manutencoes e mapa operacional. Nao inclui funcionarios, clientes, veiculos, estoque, financeiro ou ordens de servico.
 
 Porta padrao:
 
@@ -19,150 +12,102 @@ Porta padrao:
 PORT=3006
 ```
 
-## Instalacao rapida
+## Execucao
 
 ```bash
 npm install
 copy .env.example .env
+npm.cmd run migrate
+npm.cmd run seed
+npm.cmd run dev
 ```
 
-Configure o `.env` com as credenciais do MySQL e crie o banco:
+Banco:
 
 ```sql
 CREATE DATABASE dozemec CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-Execute:
-
-```bash
-npm run migrate
-npm run seed
-npm run dev
-```
-
-Frontend:
-
-- Abra `frontend/login.html` no navegador.
-- API esperada em `http://localhost:3006/api`.
-
-Credenciais de demonstracao:
-
-```text
-E-mail: admin@dozemec.com
-Senha: Admin@123
-```
-
-Altere a senha inicial antes de usar em ambiente real.
+Credenciais demo: `admin@dozemec.com` / `Admin@123`.
 
 ## Novas tabelas
 
-- `tenant_settings`
-- `tenant_business_hours`
-- `tenant_integrations`
+- `workshop_areas`
+- `workshop_bays`
+- `equipment_types`
+- `workshop_equipment`
+- `equipment_maintenance_records`
+- `bay_status_history`
+- `equipment_status_history`
 
-A migration `002_create_tenant_settings.sql` tambem adiciona em `tenants`, quando ainda nao existirem: `legal_name`, `state_registration`, `secondary_phone`, `website`, endereco detalhado, imagens, `accent_color`, `theme`, `timezone`, `locale`, `currency` e `currency_symbol`.
+## Permissoes
 
-## Permissoes Sprint 02
-
-```text
-company.read
-company.update
-company_branding.read
-company_branding.update
-company_settings.read
-company_settings.update
-business_hours.read
-business_hours.update
-integrations.read
-integrations.update
-```
-
-O seed atribui todas ao perfil Admin.
+Foram adicionadas permissoes para `workshop_areas`, `workshop_bays`, `equipment_types`, `equipment`, `equipment_maintenance` e `workshop_map`. O perfil Admin recebe todas; perfis iniciais recebem acessos coerentes.
 
 ## Endpoints
 
-Todos os endpoints abaixo exigem JWT e usam `tenant_id` exclusivamente de `req.user.tenantId`.
-
 ```http
-GET /api/company
-PUT /api/company
-GET /api/company/branding
-PUT /api/company/branding
-GET /api/company/settings
-PUT /api/company/settings
-GET /api/company/business-hours
-PUT /api/company/business-hours
-GET /api/company/integrations
-PUT /api/company/integrations/:integrationType
+GET /api/workshop/map
+GET/POST /api/workshop/areas
+GET/PUT/DELETE /api/workshop/areas/:id
+GET/POST /api/workshop/bays
+GET/PUT/DELETE /api/workshop/bays/:id
+PATCH /api/workshop/bays/:id/status
+GET /api/workshop/bays/:id/history
+GET/POST /api/equipment-types
+GET/PUT/DELETE /api/equipment-types/:id
+GET/POST /api/equipment
+GET/PUT/DELETE /api/equipment/:id
+PATCH /api/equipment/:id/status
+GET /api/equipment/:id/history
+GET/POST /api/equipment-maintenance
+GET/PUT/DELETE /api/equipment-maintenance/:id
+PATCH /api/equipment-maintenance/:id/start
+PATCH /api/equipment-maintenance/:id/complete
+PATCH /api/equipment-maintenance/:id/cancel
 ```
 
-Exemplo de atualizacao da empresa:
+## Estados
 
-```json
-{
-  "tradeName": "DOZEMEC Demo Lisboa",
-  "city": "Lisboa",
-  "country": "Portugal"
-}
-```
+Baias: `available`, `reserved`, `occupied`, `maintenance`, `unavailable`.
 
-Exemplo de identidade visual:
+Equipamentos: `available`, `in_use`, `maintenance`, `unavailable`, `retired`.
 
-```json
-{
-  "primaryColor": "#7C3AED",
-  "secondaryColor": "#111827",
-  "accentColor": "#22D3EE",
-  "theme": "dark"
-}
-```
+Manutencoes: `scheduled`, `in_progress`, `completed`, `cancelled`.
 
-Exemplo de horarios:
+## Seed inicial
 
-```json
-{
-  "days": [
-    {
-      "dayOfWeek": 1,
-      "isOpen": true,
-      "openingTime": "08:00",
-      "lunchStartTime": "12:00",
-      "lunchEndTime": "14:00",
-      "closingTime": "18:00"
-    }
-  ]
-}
-```
+Cria para o tenant demo:
+
+- Areas: Oficina principal, Alinhamento, Balanceamento.
+- 8 baias: 5 com elevador, 2 de alinhamento, 1 de balanceamento.
+- 8 tipos de equipamento.
+- 8 equipamentos vinculados as baias.
+
+## Frontend
+
+Novas paginas:
+
+- `frontend/workshop-map.html`
+- `frontend/workshop-areas.html`
+- `frontend/workshop-bays.html`
+- `frontend/equipment-types.html`
+- `frontend/equipment.html`
+- `frontend/equipment-maintenance.html`
+
+## Multiempresa e seguranca
+
+Todas as consultas usam `tenant_id` do token. Nenhum endpoint aceita `tenant_id` do cliente. Alteracoes relevantes geram auditoria sanitizada. Exclusoes sao logicas quando ha historico operacional.
 
 ## Testes manuais
 
-1. Login do administrador.
-2. Consulta dos dados da empresa.
-3. Alteracao do nome comercial.
-4. Alteracao das cores.
-5. Rejeicao de cor invalida.
-6. Consulta das configuracoes.
-7. Alteracao dos horarios.
-8. Rejeicao de horario invalido.
-9. Tentativa de enviar `tenant_id` no body.
-10. Tentativa de acessar sem token.
-11. Tentativa de acessar sem permissao.
-12. Verificacao de auditoria em `audit_logs`.
-13. Reexecucao do seed sem duplicacoes.
-14. Teste da porta 3006.
-
-## Cuidados multiempresa
-
-- Nunca envie `tenant_id` pelo frontend.
-- Queries operacionais filtram por `tenant_id`.
-- Dados sensiveis, `password_hash` e segredos de integracao nao sao retornados.
-- Integracoes aceitam apenas `provider` e `status` nesta fase.
-
-## Possiveis erros
-
-- `Variaveis de ambiente ausentes`: confira o `.env`.
-- `Credenciais invalidas`: execute o seed e use as credenciais de demonstracao.
-- `Permissao insuficiente`: confira se o seed foi reexecutado apos a Sprint 02.
-- Erro de coluna inexistente: execute `npm run migrate` antes do seed.
-
-Mais detalhes em `INSTALLATION.md` e `DEPLOYMENT.md`.
+1. Aplicar migration 004.
+2. Executar seed e reexecutar sem duplicar.
+3. Consultar mapa da oficina.
+4. Validar 3 areas, 8 baias, 8 tipos e 8 equipamentos.
+5. Criar/editar area, baia, tipo e equipamento.
+6. Alterar estado de baia/equipamento e consultar historico.
+7. Criar, iniciar, concluir e cancelar manutencao.
+8. Verificar auditoria.
+9. Acessar sem token.
+10. Verificar pagina 3006 e frontend.

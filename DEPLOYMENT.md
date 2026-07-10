@@ -43,3 +43,19 @@ Processo inicial recomendado:
 6. Reiniciar o processo Node.js.
 
 Nao ha sistema automatico de atualizacao nesta etapa.
+
+## Sprint 03
+
+- Monitore logs de login e tentativas falhas.
+- Mantenha HTTPS ativo para proteger credenciais.
+- Revise periodicamente usuarios bloqueados/inativos.
+- Verifique se backups incluem `audit_logs`, `user_login_history` e `user_password_resets`.
+- Troque a senha inicial do administrador e use um `JWT_SECRET` forte.
+
+## Sprint 04
+
+- Faça backup antes de aplicar a migration `004_create_workshop_structure.sql`.
+- Reexecute o seed com segurança para criar a estrutura demo inicial.
+- Imagens e uploads externos ainda nao foram implementados.
+- Monitore logs de auditoria para mudancas de estados e manutencoes.
+- Em atualizacoes de `0.3.0` para `0.4.0`, rode migrations antes de liberar o frontend novo.

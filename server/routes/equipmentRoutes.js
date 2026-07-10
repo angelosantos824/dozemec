@@ -1,0 +1,13 @@
+const express = require("express");
+const c = require("../controllers/equipmentController");
+const authenticate = require("../middlewares/authenticate");
+const authorize = require("../middlewares/authorize");
+const router = express.Router();
+router.get("/", authenticate, authorize("equipment.read"), c.list);
+router.post("/", authenticate, authorize("equipment.create"), c.create);
+router.get("/:id", authenticate, authorize("equipment.read"), c.show);
+router.put("/:id", authenticate, authorize("equipment.update"), c.update);
+router.patch("/:id/status", authenticate, authorize("equipment.change_status"), c.changeStatus);
+router.get("/:id/history", authenticate, authorize("equipment.view_history"), c.history);
+router.delete("/:id", authenticate, authorize("equipment.delete"), c.remove);
+module.exports = router;

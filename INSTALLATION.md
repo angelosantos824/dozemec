@@ -35,14 +35,14 @@ CREATE DATABASE dozemec CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 Rode migrations e seed:
 
 ```bash
-npm run migrate
-npm run seed
+npm.cmd run migrate
+npm.cmd run seed
 ```
 
 Inicie:
 
 ```bash
-npm run dev
+npm.cmd run dev
 ```
 
 Teste:
@@ -52,3 +52,18 @@ curl http://localhost:3006/api/health
 ```
 
 Abra `frontend/login.html` e entre com `admin@dozemec.com` / `Admin@123`.
+
+Na area administrativa, acesse tambem:
+
+- `frontend/users.html`
+- `frontend/sectors.html`
+- `frontend/roles.html`
+- `frontend/audit.html`
+- `frontend/workshop-map.html`
+- `frontend/workshop-areas.html`
+- `frontend/workshop-bays.html`
+- `frontend/equipment-types.html`
+- `frontend/equipment.html`
+- `frontend/equipment-maintenance.html`
+
+Use `npm.cmd` no PowerShell se `npm.ps1` for bloqueado pela politica de execucao.

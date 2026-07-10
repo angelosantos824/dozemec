@@ -3,6 +3,17 @@ const healthRoutes = require("./healthRoutes");
 const authRoutes = require("./authRoutes");
 const companyRoutes = require("./companyRoutes");
 const companySettingsRoutes = require("./companySettingsRoutes");
+const userRoutes = require("./userRoutes");
+const sectorRoutes = require("./sectorRoutes");
+const roleRoutes = require("./roleRoutes");
+const permissionRoutes = require("./permissionRoutes");
+const auditLogRoutes = require("./auditLogRoutes");
+const workshopAreaRoutes = require("./workshopAreaRoutes");
+const workshopBayRoutes = require("./workshopBayRoutes");
+const workshopMapRoutes = require("./workshopMapRoutes");
+const equipmentTypeRoutes = require("./equipmentTypeRoutes");
+const equipmentRoutes = require("./equipmentRoutes");
+const equipmentMaintenanceRoutes = require("./equipmentMaintenanceRoutes");
 
 const router = express.Router();
 
@@ -10,5 +21,16 @@ router.use(healthRoutes);
 router.use("/auth", authRoutes);
 router.use("/company", companyRoutes);
 router.use("/company", companySettingsRoutes);
+router.use("/users", userRoutes);
+router.use("/sectors", sectorRoutes);
+router.use("/roles", roleRoutes);
+router.use("/permissions", permissionRoutes);
+router.use("/audit-logs", auditLogRoutes);
+router.use("/workshop/areas", workshopAreaRoutes);
+router.use("/workshop/bays", workshopBayRoutes);
+router.use("/workshop/map", workshopMapRoutes);
+router.use("/equipment-types", equipmentTypeRoutes);
+router.use("/equipment", equipmentRoutes);
+router.use("/equipment-maintenance", equipmentMaintenanceRoutes);
 
 module.exports = router;

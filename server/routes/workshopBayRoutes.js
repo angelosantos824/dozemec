@@ -1,0 +1,13 @@
+const express = require("express");
+const c = require("../controllers/workshopBayController");
+const authenticate = require("../middlewares/authenticate");
+const authorize = require("../middlewares/authorize");
+const router = express.Router();
+router.get("/", authenticate, authorize("workshop_bays.read"), c.list);
+router.post("/", authenticate, authorize("workshop_bays.create"), c.create);
+router.get("/:id", authenticate, authorize("workshop_bays.read"), c.show);
+router.put("/:id", authenticate, authorize("workshop_bays.update"), c.update);
+router.patch("/:id/status", authenticate, authorize("workshop_bays.change_status"), c.changeStatus);
+router.get("/:id/history", authenticate, authorize("workshop_bays.view_history"), c.history);
+router.delete("/:id", authenticate, authorize("workshop_bays.delete"), c.remove);
+module.exports = router;

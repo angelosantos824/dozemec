@@ -1,0 +1,14 @@
+const express = require("express");
+const c = require("../controllers/equipmentMaintenanceController");
+const authenticate = require("../middlewares/authenticate");
+const authorize = require("../middlewares/authorize");
+const router = express.Router();
+router.get("/", authenticate, authorize("equipment_maintenance.read"), c.list);
+router.post("/", authenticate, authorize("equipment_maintenance.create"), c.create);
+router.get("/:id", authenticate, authorize("equipment_maintenance.read"), c.show);
+router.put("/:id", authenticate, authorize("equipment_maintenance.update"), c.update);
+router.patch("/:id/start", authenticate, authorize("equipment_maintenance.update"), c.start);
+router.patch("/:id/complete", authenticate, authorize("equipment_maintenance.complete"), c.complete);
+router.patch("/:id/cancel", authenticate, authorize("equipment_maintenance.update"), c.cancel);
+router.delete("/:id", authenticate, authorize("equipment_maintenance.delete"), c.remove);
+module.exports = router;

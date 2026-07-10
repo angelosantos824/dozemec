@@ -1,0 +1,11 @@
+const express = require("express");
+const c = require("../controllers/equipmentTypeController");
+const authenticate = require("../middlewares/authenticate");
+const authorize = require("../middlewares/authorize");
+const router = express.Router();
+router.get("/", authenticate, authorize("equipment_types.read"), c.list);
+router.post("/", authenticate, authorize("equipment_types.create"), c.create);
+router.get("/:id", authenticate, authorize("equipment_types.read"), c.show);
+router.put("/:id", authenticate, authorize("equipment_types.update"), c.update);
+router.delete("/:id", authenticate, authorize("equipment_types.delete"), c.remove);
+module.exports = router;

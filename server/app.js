@@ -1,5 +1,7 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
+
 const env = require("./config/env");
 const apiRoutes = require("./routes");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
@@ -8,6 +10,15 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const frontendPath = path.join(__dirname, "../frontend");
+
+app.use(express.static(frontendPath));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(frontendPath, "login.html"));
+});
 
 app.use("/api", apiRoutes);
 
