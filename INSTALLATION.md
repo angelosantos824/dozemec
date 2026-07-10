@@ -1,6 +1,6 @@
 # Instalacao DOZEMEC
 
-Versao: `0.5.0`.
+Versao: `0.6.0`.
 
 ## Requisitos
 
@@ -41,7 +41,7 @@ npm.cmd run migrate
 npm.cmd run seed
 ```
 
-A migration `005_create_employees_module.sql` cria o modulo de funcionarios. O seed adiciona cargos e especialidades iniciais de forma idempotente, sem criar funcionarios ficticios.
+As migrations `005_create_employees_module.sql` e `006_create_customers_module.sql` criam os modulos de funcionarios e clientes. O seed adiciona permissoes e catalogos iniciais de forma idempotente, sem criar funcionarios ou clientes ficticios.
 
 Inicie:
 
@@ -74,5 +74,6 @@ Na area administrativa, acesse tambem:
 - `http://localhost:3006/employees/`
 - `http://localhost:3006/employees/job-positions.html`
 - `http://localhost:3006/employees/specialties.html`
+- `http://localhost:3006/customers/`
 
 Use `npm.cmd` no PowerShell se `npm.ps1` for bloqueado pela politica de execucao.

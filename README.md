@@ -1,6 +1,60 @@
 # DOZEMEC
 
-SaaS multiempresa da DOZEDEV para gestao de oficinas. Versao atual: `0.5.0`.
+SaaS multiempresa da DOZEDEV para gestao de oficinas. Versao atual: `0.5.1`.
+
+## v0.5.1 - Correcao do fluxo de manutencoes
+
+Esta versao corrige o fluxo existente de manutencao de equipamentos sem criar novo modulo de negocio e sem migration.
+
+- `Iniciar`, `Concluir` e `Cancelar` usam os endpoints oficiais de manutencao.
+- Baias podem abrir manutencao para equipamento vinculado ou ser apenas bloqueadas por motivo operacional.
+- Baias e equipamentos em manutencao so podem ser liberados quando nao houver manutencao agendada ou em andamento bloqueando a acao.
+- A tela de manutencoes exibe equipamento por nome, tipo, situacao, datas, custo e acoes validas.
+- Codigos internos continuam no backend, mas o frontend exibe rotulos em portugues, datas no locale da empresa e valores em EUR por padrao.
+
+## Sprint 06
+
+Esta Sprint adiciona o modulo de clientes da oficina, com suporte a clientes particulares e empresariais. Cliente continua separado de usuario do sistema; nao ha autenticacao, portal ou acesso de cliente nesta Sprint.
+
+Novas areas:
+
+- Clientes particulares e empresas.
+- Contatos multiplos.
+- Enderecos multiplos.
+- Documentos sem upload real.
+- Preferencias de contato.
+- Consentimentos com historico.
+- Notas internas.
+- Relacionamentos entre clientes.
+- Bloqueio, desbloqueio e historico.
+
+Novas tabelas:
+
+- `customers`
+- `customer_contacts`
+- `customer_addresses`
+- `customer_documents`
+- `customer_consents`
+- `customer_preferences`
+- `customer_notes`
+- `customer_status_history`
+- `customer_change_history`
+- `customer_relationships`
+
+Endpoints principais:
+
+- `/api/customers`
+- `/api/customers/:id/contacts`
+- `/api/customers/:id/addresses`
+- `/api/customers/:id/documents`
+- `/api/customers/:id/consents`
+- `/api/customers/:id/preferences`
+- `/api/customers/:id/notes`
+- `/api/customers/:id/relationships`
+- `/api/customers/:id/history`
+- `/api/customers/:id/summary`
+
+Dados sensiveis sao protegidos por permissao. Documentos sao mascarados, dados financeiros exigem `customers.view_financial_data`, documentos exigem `customers.view_documents`, e notas confidenciais exigem `customer_notes.read_confidential`.
 
 ## Sprint 05
 
@@ -137,3 +191,5 @@ O client usa caminho relativo `/api`, evitando `localhost` fixo e facilitando re
 - `/workshop/equipment-types.html`
 - `/workshop/equipment.html`
 - `/workshop/maintenance.html`
+- `/customers/`
+- `/customers/details.html`

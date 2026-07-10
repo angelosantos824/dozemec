@@ -1,0 +1,1 @@
+(function () { window.DOZEMECCustomerRelationships = { resource: "relationships", form: "relationshipForm", table: "relationshipsTable", headers: [{ key: "relatedCustomerId", label: "Cliente" }, { key: "relationshipType", label: "Tipo" }, { key: "notes", label: "Notas" }] }; })();

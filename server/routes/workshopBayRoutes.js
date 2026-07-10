@@ -8,6 +8,8 @@ router.post("/", authenticate, authorize("workshop_bays.create"), c.create);
 router.get("/:id", authenticate, authorize("workshop_bays.read"), c.show);
 router.put("/:id", authenticate, authorize("workshop_bays.update"), c.update);
 router.patch("/:id/status", authenticate, authorize("workshop_bays.change_status"), c.changeStatus);
+router.post("/:id/maintenance", authenticate, authorize("equipment_maintenance.create"), c.createMaintenance);
+router.patch("/:id/release", authenticate, authorize("workshop_bays.change_status"), c.release);
 router.get("/:id/history", authenticate, authorize("workshop_bays.view_history"), c.history);
 router.delete("/:id", authenticate, authorize("workshop_bays.delete"), c.remove);
 module.exports = router;

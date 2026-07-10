@@ -1,0 +1,1 @@
+(function () { window.DOZEMECCustomerAddresses = { resource: "addresses", form: "addressForm", table: "addressesTable", headers: [{ key: "addressType", label: "Tipo" }, { key: "address", label: "Endereco" }, { key: "city", label: "Cidade" }, { key: "isPrimary", label: "Principal" }, { key: "isBilling", label: "Faturacao" }] }; })();

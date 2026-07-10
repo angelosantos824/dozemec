@@ -1,0 +1,1 @@
+(function () { window.DOZEMECCustomerDocuments = { resource: "documents", form: "documentForm", table: "documentsTable", headers: [{ key: "documentType", label: "Tipo" }, { key: "documentNumber", label: "Numero" }, { key: "expiryDate", label: "Validade" }, { key: "status", label: "Status" }] }; })();

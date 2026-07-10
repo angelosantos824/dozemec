@@ -1,0 +1,1 @@
+(function () { window.DOZEMECCustomerNotes = { resource: "notes", form: "noteForm", table: "notesTable", headers: [{ key: "noteType", label: "Tipo" }, { key: "content", label: "Conteudo" }, { key: "isConfidential", label: "Confidencial" }] }; })();

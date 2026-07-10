@@ -35,14 +35,19 @@ async function get(tenantId, id) {
 }
 
 async function changeStatus({ tenantId, id, userId, ipAddress, operationalStatus, reason }) {
-  requireReasonForStatus(operationalStatus, reason, ["maintenance", "unavailable", "retired"]);
   const connection = await pool.getConnection();
   try {
     await connection.beginTransaction();
     const oldData = await repo.findById(table, tenantId, id, connection);
     if (!oldData) throw new AppError("Equipamento nao encontrado", 404);
+    if (oldData.operational_status === operationalStatus) throw new AppError("A situacao selecionada ja e a situacao atual.", 400);
+    requireReasonForStatus(operationalStatus, reason, ["maintenance", "unavailable", "retired"]);
     if (oldData.operational_status === "retired" && operationalStatus === "available") {
       throw new AppError("Equipamento retired nao pode voltar automaticamente para available", 400);
+    }
+    if (oldData.operational_status === "maintenance" && ["available", "unavailable"].includes(operationalStatus)) {
+      const activeMaintenance = await repo.count(repo.tables.maintenance, tenantId, "equipment_id", id, connection, "AND status IN ('scheduled', 'in_progress')");
+      if (activeMaintenance > 0) throw new AppError("Existe manutencao agendada ou em andamento para este equipamento. Conclua ou cancele antes de liberar.", 400);
     }
     await repo.update(table, tenantId, id, { operationalStatus }, userId, connection);
     await connection.execute(

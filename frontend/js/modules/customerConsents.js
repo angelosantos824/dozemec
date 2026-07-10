@@ -1,0 +1,1 @@
+(function () { window.DOZEMECCustomerConsents = { resource: "consents", form: "consentForm", table: "consentsTable", headers: [{ key: "consentType", label: "Tipo" }, { key: "granted", label: "Concedido" }, { key: "source", label: "Origem" }, { key: "createdAt", label: "Data" }] }; })();

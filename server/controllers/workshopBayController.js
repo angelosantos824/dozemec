@@ -7,6 +7,8 @@ module.exports = {
   create: wrap(async (req, res) => apiResponse.success(res, await service.create({ tenantId: req.user.tenantId, userId: req.user.id, ipAddress: req.ip, data: req.body }), 201)),
   update: wrap(async (req, res) => apiResponse.success(res, await service.update({ tenantId: req.user.tenantId, id: req.params.id, userId: req.user.id, ipAddress: req.ip, data: req.body }))),
   changeStatus: wrap(async (req, res) => apiResponse.success(res, await service.changeStatus({ tenantId: req.user.tenantId, id: req.params.id, userId: req.user.id, ipAddress: req.ip, operationalStatus: req.body.operationalStatus, reason: req.body.reason }))),
+  createMaintenance: wrap(async (req, res) => apiResponse.success(res, await service.createMaintenance({ tenantId: req.user.tenantId, id: req.params.id, userId: req.user.id, ipAddress: req.ip, data: req.body }), 201)),
+  release: wrap(async (req, res) => apiResponse.success(res, await service.release({ tenantId: req.user.tenantId, id: req.params.id, userId: req.user.id, ipAddress: req.ip, data: req.body }))),
   history: wrap(async (req, res) => apiResponse.success(res, await service.history(req.user.tenantId, req.params.id))),
   remove: wrap(async (req, res) => apiResponse.success(res, await service.remove({ tenantId: req.user.tenantId, id: req.params.id, userId: req.user.id, ipAddress: req.ip })))
 };

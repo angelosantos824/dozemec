@@ -78,3 +78,13 @@ Nao ha sistema automatico de atualizacao nesta etapa.
 - Mantenha HTTPS ativo para proteger dados pessoais de funcionarios.
 - Nao registre documentos completos, salarios ou notas confidenciais em logs externos.
 - Defina politica de acesso para administradores que podem vincular funcionarios a usuarios.
+
+## Sprint 06
+
+- Faca backup antes de aplicar a migration `006_create_customers_module.sql`.
+- Atualize de `0.5.0` para `0.6.0` executando migrations antes de liberar o frontend novo.
+- Reexecute o seed para criar novas permissoes sem duplicacao.
+- Revise perfis com acesso a dados financeiros, documentos, consentimentos e notas confidenciais.
+- Mantenha HTTPS ativo para proteger dados pessoais de clientes.
+- Preserve historico de consentimentos para privacidade e auditoria.
+- Nao registre documentos completos, limites de credito ou notas confidenciais em logs externos.

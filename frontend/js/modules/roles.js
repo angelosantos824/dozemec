@@ -5,7 +5,8 @@
 
   async function load() {
     const data = await window.DOZEMECApi.get("/roles?limit=100");
-    window.DOZEMECTable.table(tableEl, [{ key: "name", label: "Nome" }, { key: "code", label: "Código" }, { key: "status", label: "Status" }], data.items, [
+    const rows = data.items.map((item) => ({ ...item, statusLabel: window.DOZEMEC_I18N ? window.DOZEMEC_I18N.text(item.status) : item.status }));
+    window.DOZEMECTable.table(tableEl, [{ key: "name", label: "Nome" }, { key: "code", label: "Codigo" }, { key: "statusLabel", label: "Status" }], rows, [
       { label: "Editar", run: edit },
       { label: "Excluir", run: async (row) => { await requestDelete(row.id); await load(); } }
     ]);
@@ -43,7 +44,7 @@
   document.getElementById("savePermissions").addEventListener("click", async () => {
     if (!selectedRoleId) return window.DOZEMECTable.message("Selecione um perfil.", "error");
     await window.DOZEMECApi.put(`/roles/${selectedRoleId}/permissions`, { permissionIds: window.DOZEMECPermissions.selectedPermissions() });
-    window.DOZEMECTable.message("Permissões salvas.", "success");
+    window.DOZEMECTable.message("Permissoes salvas.", "success");
   });
 
   document.getElementById("clearButton").addEventListener("click", () => form.reset());

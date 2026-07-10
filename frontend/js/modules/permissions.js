@@ -12,7 +12,7 @@
         input.value = permission.id;
         input.checked = selectedIds && selectedIds.includes(permission.id);
         const span = document.createElement("span");
-        span.textContent = `${group.module}: ${permission.code}`;
+        span.textContent = window.DOZEMEC_I18N ? window.DOZEMEC_I18N.permission(permission.code) : `${group.module}: ${permission.code}`;
         label.appendChild(input);
         label.appendChild(span);
         container.appendChild(label);

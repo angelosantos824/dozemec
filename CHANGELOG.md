@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## v0.5.1
+
+- Corrigido fluxo de manutencao de equipamentos sem criar novo modulo de negocio ou migration.
+- Acoes de manutencao agora respeitam transicoes validas: agendada, em andamento, concluida e cancelada.
+- Baias passam a abrir manutencao com equipamento vinculado ou apenas bloqueio manual da baia.
+- Liberacao de baias e equipamentos valida manutencoes ativas antes de alterar a situacao.
+- Tabelas, historicos, permissoes, datas e valores exibem rotulos amigaveis em portugues.
+
+## v0.6.0
+
+- CRUD de clientes particulares e empresariais.
+- Contatos multiplos.
+- Enderecos multiplos.
+- Documentos.
+- Preferencias de contato.
+- Consentimentos.
+- Notas internas.
+- Relacionamentos entre clientes.
+- Bloqueio e desbloqueio.
+- Historico de alteracoes.
+- Protecao de dados sensiveis.
+
 ## v0.5.0
 
 - CRUD de funcionarios.

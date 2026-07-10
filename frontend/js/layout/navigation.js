@@ -11,6 +11,8 @@
     { id: "equipment-types", title: "Tipos de Equipamento", href: "/workshop/equipment-types.html", group: "Oficina", permission: "equipment_types.read" },
     { id: "equipment", title: "Equipamentos", href: "/workshop/equipment.html", group: "Oficina", permission: "equipment.read" },
     { id: "equipment-maintenance", title: "Manutencoes", href: "/workshop/maintenance.html", group: "Oficina", permission: "equipment_maintenance.read" },
+    { id: "customers", title: "Lista de Clientes", href: "/customers/", group: "Clientes", permission: "customers.read" },
+    { id: "customer-details", title: "Detalhes do cliente", href: "/customers/details.html", group: "Clientes", permission: "customers.read" },
     { id: "employees", title: "Lista de Funcionarios", href: "/employees/", group: "Funcionarios", permission: "employees.read" },
     { id: "job-positions", title: "Cargos", href: "/employees/job-positions.html", group: "Funcionarios", permission: "job_positions.read" },
     { id: "employee-specialties", title: "Especialidades", href: "/employees/specialties.html", group: "Funcionarios", permission: "employee_specialties.read" },

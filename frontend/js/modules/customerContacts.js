@@ -1,0 +1,1 @@
+(function () { window.DOZEMECCustomerContacts = { resource: "contacts", form: "contactForm", table: "contactsTable", headers: [{ key: "name", label: "Nome" }, { key: "contactType", label: "Tipo" }, { key: "email", label: "E-mail" }, { key: "phone", label: "Telefone" }, { key: "isPrimary", label: "Principal" }] }; })();

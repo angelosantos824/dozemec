@@ -24,7 +24,17 @@ const sensitiveKeys = [
   "secondary_phone",
   "whatsapp",
   "emergencyContactPhone",
-  "emergency_contact_phone"
+  "emergency_contact_phone",
+  "customerCode",
+  "customer_code",
+  "creditLimit",
+  "credit_limit",
+  "blockReason",
+  "block_reason",
+  "stateRegistration",
+  "state_registration",
+  "municipalRegistration",
+  "municipal_registration"
 ];
 
 function sanitize(value) {

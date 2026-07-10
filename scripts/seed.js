@@ -101,6 +101,37 @@ const employeePermissions = [
   "employee_notes.delete"
 ];
 
+const customerPermissions = [
+  "customers.create",
+  "customers.read",
+  "customers.update",
+  "customers.delete",
+  "customers.activate",
+  "customers.deactivate",
+  "customers.block",
+  "customers.unblock",
+  "customers.view_documents",
+  "customers.manage_documents",
+  "customers.view_history",
+  "customer_contacts.create",
+  "customer_contacts.read",
+  "customer_contacts.update",
+  "customer_contacts.delete",
+  "customer_addresses.create",
+  "customer_addresses.read",
+  "customer_addresses.update",
+  "customer_addresses.delete",
+  "customer_consents.read",
+  "customer_consents.update",
+  "customer_notes.create",
+  "customer_notes.read",
+  "customer_notes.update",
+  "customer_notes.delete",
+  "customer_relationships.create",
+  "customer_relationships.read",
+  "customer_relationships.delete"
+];
+
 const jobPositions = [
   ["Gerente de oficina", "WORKSHOP_MANAGER", "Gestao operacional da oficina", 0, 10],
   ["Rececionista", "RECEPTIONIST", "Atendimento e recepcao", 0, 20],
@@ -211,10 +242,15 @@ async function upsertRoles(connection, tenantId) {
 
 async function syncRolePermissions(connection, roleIds) {
   rolePermissionCodes.Gerente = [...new Set([...(rolePermissionCodes.Gerente || []), ...employeePermissions])];
+  rolePermissionCodes.Gerente = [...new Set([...(rolePermissionCodes.Gerente || []), ...customerPermissions])];
   rolePermissionCodes["Recepção"] = [...new Set([...(rolePermissionCodes["Recepção"] || []), "employees.read", "job_positions.read", "employee_specialties.read"])];
+  rolePermissionCodes["Recepção"] = [...new Set([...(rolePermissionCodes["Recepção"] || []), "customers.create", "customers.read", "customers.update", "customer_contacts.create", "customer_contacts.read", "customer_contacts.update", "customer_addresses.create", "customer_addresses.read", "customer_addresses.update", "customer_consents.read"])];
   rolePermissionCodes["Mecânico"] = [...new Set([...(rolePermissionCodes["Mecânico"] || []), "employees.read"])];
+  rolePermissionCodes["Mecânico"] = [...new Set([...(rolePermissionCodes["Mecânico"] || []), "customers.read"])];
   rolePermissionCodes.Financeiro = [...new Set([...(rolePermissionCodes.Financeiro || []), "employees.read", "employees.view_financial_data"])];
+  rolePermissionCodes.Financeiro = [...new Set([...(rolePermissionCodes.Financeiro || []), "customers.read", "customers.view_financial_data", "customer_contacts.read", "customer_addresses.read"])];
   rolePermissionCodes.Consulta = [...new Set([...(rolePermissionCodes.Consulta || []), "employees.read", "job_positions.read", "employee_specialties.read"])];
+  rolePermissionCodes.Consulta = [...new Set([...(rolePermissionCodes.Consulta || []), "customers.read", "customer_contacts.read", "customer_addresses.read"])];
 
   const [permissionRows] = await connection.execute("SELECT id, code FROM permissions");
   const byCode = new Map(permissionRows.map((permission) => [permission.code, permission.id]));

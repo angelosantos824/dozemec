@@ -17,6 +17,7 @@ const equipmentMaintenanceRoutes = require("./equipmentMaintenanceRoutes");
 const jobPositionRoutes = require("./jobPositionRoutes");
 const employeeSpecialtyRoutes = require("./employeeSpecialtyRoutes");
 const employeeRoutes = require("./employeeRoutes");
+const customerRoutes = require("./customerRoutes");
 
 const router = express.Router();
 
@@ -38,5 +39,6 @@ router.use("/equipment-maintenance", equipmentMaintenanceRoutes);
 router.use("/job-positions", jobPositionRoutes);
 router.use("/employee-specialties", employeeSpecialtyRoutes);
 router.use("/employees", employeeRoutes);
+router.use("/customers", customerRoutes);
 
 module.exports = router;
