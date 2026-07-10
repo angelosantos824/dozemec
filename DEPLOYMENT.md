@@ -68,3 +68,13 @@ Nao ha sistema automatico de atualizacao nesta etapa.
 - Redirecionamentos antigos devem ser preservados para compatibilidade.
 - Nao ha migration nesta Sprint.
 - Backup continua recomendado antes de qualquer publicacao.
+
+## Sprint 05
+
+- Faca backup antes de aplicar a migration `005_create_employees_module.sql`.
+- Atualize de `0.4.1` para `0.5.0` executando migrations antes de liberar o frontend novo.
+- Reexecute o seed para criar cargos, especialidades e permissoes sem duplicacao.
+- Revise perfis com acesso a dados financeiros, documentos e notas confidenciais.
+- Mantenha HTTPS ativo para proteger dados pessoais de funcionarios.
+- Nao registre documentos completos, salarios ou notas confidenciais em logs externos.
+- Defina politica de acesso para administradores que podem vincular funcionarios a usuarios.

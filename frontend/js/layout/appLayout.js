@@ -1,5 +1,5 @@
 (function () {
-  const VERSION = "0.4.1";
+  const VERSION = "0.5.0";
   let state = { user: null, permissions: [], company: null, content: null, page: null };
 
   function el(tag, className, text) {

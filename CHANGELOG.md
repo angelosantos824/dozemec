@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v0.5.0
+
+- CRUD de funcionarios.
+- Gestao de cargos e especialidades.
+- Vinculo opcional entre funcionario e usuario.
+- Horarios individuais de trabalho.
+- Documentos profissionais sem upload real.
+- Notas internas com confidencialidade.
+- Situacao contratual e ativacao/desativacao.
+- Comissoes configuraveis.
+- Historico de status, contrato e vinculo de usuario.
+- Protecao de dados sensiveis por permissao.
+- Frontend de funcionarios com lista, catalogos e detalhes.
+
 ## v0.4.1
 
 - Reorganizacao do frontend por dominio.

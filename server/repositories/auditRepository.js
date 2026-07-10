@@ -1,4 +1,31 @@
-const sensitiveKeys = ["password", "passwordHash", "password_hash", "token", "jwt", "jwtSecret", "JWT_SECRET"];
+const sensitiveKeys = [
+  "password",
+  "passwordHash",
+  "password_hash",
+  "token",
+  "jwt",
+  "jwtSecret",
+  "JWT_SECRET",
+  "taxNumber",
+  "tax_number",
+  "identityDocument",
+  "identity_document",
+  "socialSecurityNumber",
+  "social_security_number",
+  "documentNumber",
+  "document_number",
+  "baseSalary",
+  "base_salary",
+  "hourlyRate",
+  "hourly_rate",
+  "content",
+  "phone",
+  "secondaryPhone",
+  "secondary_phone",
+  "whatsapp",
+  "emergencyContactPhone",
+  "emergency_contact_phone"
+];
 
 function sanitize(value) {
   if (!value || typeof value !== "object") return value;

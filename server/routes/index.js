@@ -14,6 +14,9 @@ const workshopMapRoutes = require("./workshopMapRoutes");
 const equipmentTypeRoutes = require("./equipmentTypeRoutes");
 const equipmentRoutes = require("./equipmentRoutes");
 const equipmentMaintenanceRoutes = require("./equipmentMaintenanceRoutes");
+const jobPositionRoutes = require("./jobPositionRoutes");
+const employeeSpecialtyRoutes = require("./employeeSpecialtyRoutes");
+const employeeRoutes = require("./employeeRoutes");
 
 const router = express.Router();
 
@@ -32,5 +35,8 @@ router.use("/workshop/map", workshopMapRoutes);
 router.use("/equipment-types", equipmentTypeRoutes);
 router.use("/equipment", equipmentRoutes);
 router.use("/equipment-maintenance", equipmentMaintenanceRoutes);
+router.use("/job-positions", jobPositionRoutes);
+router.use("/employee-specialties", employeeSpecialtyRoutes);
+router.use("/employees", employeeRoutes);
 
 module.exports = router;

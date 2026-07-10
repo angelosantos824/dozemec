@@ -1,6 +1,44 @@
 # DOZEMEC
 
-SaaS multiempresa da DOZEDEV para gestao de oficinas. Versao atual: `0.4.1`.
+SaaS multiempresa da DOZEDEV para gestao de oficinas. Versao atual: `0.5.0`.
+
+## Sprint 05
+
+Esta Sprint adiciona o modulo de funcionarios da oficina, mantendo funcionario e usuario como entidades separadas. O vinculo com usuario de acesso e opcional, limitado ao mesmo tenant e exclusivo para um unico funcionario.
+
+Novas areas:
+
+- Funcionarios, cargos e especialidades.
+- Horarios individuais de trabalho.
+- Documentos profissionais sem upload real de arquivos.
+- Notas internas com controle de confidencialidade.
+- Historico de status, contrato e vinculo com usuario.
+- Resumo profissional do funcionario.
+
+Novas tabelas principais:
+
+- `job_positions`
+- `employee_specialties`
+- `employees`
+- `employee_specialty_assignments`
+- `employee_work_schedules`
+- `employee_documents`
+- `employee_status_history`
+- `employee_user_link_history`
+- `employee_notes`
+
+Endpoints principais:
+
+- `/api/job-positions`
+- `/api/employee-specialties`
+- `/api/employees`
+- `/api/employees/:id/schedule`
+- `/api/employees/:id/documents`
+- `/api/employees/:id/notes`
+- `/api/employees/:id/history`
+- `/api/employees/:id/summary`
+
+Dados sensiveis sao protegidos por permissao: salario e valor hora exigem `employees.view_financial_data`, documentos exigem `employees.view_documents`, e notas confidenciais exigem `employee_notes.read_confidential`. Listagens gerais mascaram documentos e nao retornam informacao financeira.
 
 ## Sprint 04.1
 

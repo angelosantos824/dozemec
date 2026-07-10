@@ -74,6 +74,58 @@ const demoEquipment = [
   ["Balanceadora 01", "BALANCER_01", "BALANCING_MACHINE", "BALANCING_01", "PAT-0008"]
 ];
 
+const employeePermissions = [
+  "job_positions.create",
+  "job_positions.read",
+  "job_positions.update",
+  "job_positions.delete",
+  "employee_specialties.create",
+  "employee_specialties.read",
+  "employee_specialties.update",
+  "employee_specialties.delete",
+  "employees.create",
+  "employees.read",
+  "employees.update",
+  "employees.delete",
+  "employees.activate",
+  "employees.deactivate",
+  "employees.link_user",
+  "employees.view_documents",
+  "employees.manage_documents",
+  "employees.view_history",
+  "employee_schedules.read",
+  "employee_schedules.update",
+  "employee_notes.create",
+  "employee_notes.read",
+  "employee_notes.update",
+  "employee_notes.delete"
+];
+
+const jobPositions = [
+  ["Gerente de oficina", "WORKSHOP_MANAGER", "Gestao operacional da oficina", 0, 10],
+  ["Rececionista", "RECEPTIONIST", "Atendimento e recepcao", 0, 20],
+  ["Mecanico", "MECHANIC", "Profissional de mecanica geral", 5, 30],
+  ["Eletricista automotivo", "AUTOMOTIVE_ELECTRICIAN", "Especialista em sistemas eletricos", 5, 40],
+  ["Tecnico de alinhamento", "ALIGNMENT_TECHNICIAN", "Tecnico de alinhamento e geometria", 3, 50],
+  ["Estoquista", "STOCK_KEEPER", "Responsavel por estoque", 0, 60],
+  ["Auxiliar de oficina", "WORKSHOP_ASSISTANT", "Apoio operacional da oficina", 0, 70]
+];
+
+const employeeSpecialties = [
+  ["Mecanica geral", "GENERAL_MECHANICS", "Manutencao mecanica geral", 10],
+  ["Motores diesel", "DIESEL_ENGINES", "Manutencao de motores diesel", 20],
+  ["Motores a gasolina", "GASOLINE_ENGINES", "Manutencao de motores a gasolina", 30],
+  ["Freios", "BRAKES", "Sistemas de travagem", 40],
+  ["Suspensao", "SUSPENSION", "Suspensao e direcao", 50],
+  ["Eletrica automotiva", "AUTOMOTIVE_ELECTRICAL", "Sistemas eletricos automotivos", 60],
+  ["Eletronica embarcada", "ONBOARD_ELECTRONICS", "Diagnostico eletronico", 70],
+  ["Alinhamento", "ALIGNMENT", "Alinhamento de direcao", 80],
+  ["Balanceamento", "BALANCING", "Balanceamento de rodas", 90],
+  ["Diagnostico automotivo", "AUTOMOTIVE_DIAGNOSTICS", "Diagnostico tecnico", 100],
+  ["Caminhoes", "TRUCKS", "Veiculos pesados", 110],
+  ["Ar-condicionado", "AIR_CONDITIONING", "Climatizacao automotiva", 120]
+];
+
 function permissionName(code) {
   return code.split(".").map((part) => part.replace("_", " ")).join(" ");
 }
@@ -158,6 +210,12 @@ async function upsertRoles(connection, tenantId) {
 }
 
 async function syncRolePermissions(connection, roleIds) {
+  rolePermissionCodes.Gerente = [...new Set([...(rolePermissionCodes.Gerente || []), ...employeePermissions])];
+  rolePermissionCodes["Recepção"] = [...new Set([...(rolePermissionCodes["Recepção"] || []), "employees.read", "job_positions.read", "employee_specialties.read"])];
+  rolePermissionCodes["Mecânico"] = [...new Set([...(rolePermissionCodes["Mecânico"] || []), "employees.read"])];
+  rolePermissionCodes.Financeiro = [...new Set([...(rolePermissionCodes.Financeiro || []), "employees.read", "employees.view_financial_data"])];
+  rolePermissionCodes.Consulta = [...new Set([...(rolePermissionCodes.Consulta || []), "employees.read", "job_positions.read", "employee_specialties.read"])];
+
   const [permissionRows] = await connection.execute("SELECT id, code FROM permissions");
   const byCode = new Map(permissionRows.map((permission) => [permission.code, permission.id]));
 
@@ -290,6 +348,31 @@ async function upsertWorkshopStructure(connection, tenantId) {
   }
 }
 
+async function upsertEmployeeCatalogs(connection, tenantId) {
+  for (const [name, code, description, commission, displayOrder] of jobPositions) {
+    await connection.execute(
+      `INSERT INTO job_positions
+        (tenant_id, name, code, description, default_commission_percentage, display_order, status)
+      VALUES (?, ?, ?, ?, ?, ?, 'active')
+      ON DUPLICATE KEY UPDATE name = VALUES(name), description = VALUES(description),
+        default_commission_percentage = VALUES(default_commission_percentage),
+        display_order = VALUES(display_order), status = 'active', deleted_at = NULL`,
+      [tenantId, name, code, description, commission, displayOrder]
+    );
+  }
+
+  for (const [name, code, description, displayOrder] of employeeSpecialties) {
+    await connection.execute(
+      `INSERT INTO employee_specialties
+        (tenant_id, name, code, description, display_order, status)
+      VALUES (?, ?, ?, ?, ?, 'active')
+      ON DUPLICATE KEY UPDATE name = VALUES(name), description = VALUES(description),
+        display_order = VALUES(display_order), status = 'active', deleted_at = NULL`,
+      [tenantId, name, code, description, displayOrder]
+    );
+  }
+}
+
 async function run() {
   const connection = await pool.getConnection();
   try {
@@ -304,6 +387,7 @@ async function run() {
     await upsertBusinessHours(connection, tenantId);
     await upsertIntegrations(connection, tenantId);
     await upsertWorkshopStructure(connection, tenantId);
+    await upsertEmployeeCatalogs(connection, tenantId);
     await createAuditLog(connection, tenantId, userId);
     await connection.commit();
     console.log("Seed inicial executado com sucesso.");
